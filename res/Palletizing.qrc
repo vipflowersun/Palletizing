@@ -1,0 +1,36 @@
+<RCC>
+  <qresource prefix="/Palletizing">
+    <file>fatal.png</file>
+    <file>arrowRight.png</file>
+    <file>arrowLeft.png</file>
+	<file>feedWire.png</file>
+	<file>pause.png</file>
+	<file>red.png</file>
+	<file>safePoint.png</file>
+	<file>start.png</file>
+	<file>multiLayers.png</file>
+	<file>parametor.png</file>
+	<file>infomation.png</file>
+	<file>fwd.png</file>
+	<file>inv.png</file>
+	<file>manager.png</file>
+	<file>pickPoint.png</file>
+	<file>keyPoint.png</file>
+	<file>cut.png</file>
+	<file>undo.png</file>
+	<file>redo.png</file>
+	<file>partMaker.png</file>
+	<file>autoProcess.png</file>
+	<file>Cirno.jpg</file>
+	<file>Admin.png</file>
+	<file>Guest.png</file>
+	<file>group.png</file>
+	<file>seam.png</file>
+	<file>greenRect.png</file>
+	<file>welderTcp.png</file>
+	<file>shutDown.png</file>
+	<file>R6.png</file>
+	<file>redRect.png</file>
+	<file>PointCloud.png</file>
+  </qresource>
+</RCC>

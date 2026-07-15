@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AutoPage</class>
+ <widget class="QWidget" name="AutoPage">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1171</width>
+    <height>842</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="3,1">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,1">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1">
+       <item>
+        <widget class="Palletizing::MotionInfoDisplayWidget" name="motionInfoDisplay">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Palletizing::MonitorWidget" name="widMonitor" native="true"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="Palletizing::PalletizingOutputDisplayWidget" name="widPalletizingOutput" native="true"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="btnStart">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>启动</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnStop">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>停止</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Palletizing::MotionInfoDisplayWidget</class>
+   <extends>QListView</extends>
+   <header>MotionInfoDisplayWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Palletizing::PalletizingOutputDisplayWidget</class>
+   <extends>QWidget</extends>
+   <header>PalletizingOutputDisplayWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Palletizing::MonitorWidget</class>
+   <extends>QWidget</extends>
+   <header>MonitorWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../res/Palletizing.qrc"/>
+ </resources>
+ <connections/>
+</ui>
