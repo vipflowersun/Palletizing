@@ -121,6 +121,7 @@ namespace LuaFunction
 
     int palletLevel(lua_State* L)
     {
+        
         ScriptController* scriptController = std::any_cast<ScriptController*>(LuaManager::userData(L, "scriptController"));
         std::shared_ptr<LuaManager> luaManager = scriptController->luaManager().lock();
 
@@ -139,17 +140,18 @@ namespace LuaFunction
             palletizingOutput = Palletizer().MirrorOutput(palletizingOutput);
         emit scriptController->palletizingUpdated(palletizingOutput);
 
+
         if (device != 0 && device != 1)
 			TERMINATE_WITH_ERROR_TIPS("device should be 0 or 1");
 
-        if (level == 0)
+        /*if (level == 0)
         {
             bool cleared = true;
             if (int err = mainWindow->getMani4A()->isUnloadCleared(device, cleared))
                 TERMINATE_WITH_ERROR_TIPS("isUnloadCleared failed");
             if (!cleared)
                 TERMINATE_WITH_ERROR_TIPS("下料位未清空");
-        }
+        }*/
 
         /******************运动执行******************/
 
@@ -213,7 +215,7 @@ namespace LuaFunction
             {
                 //等待上料点ready
                 emit scriptController->motionExecuting(QObject::tr("等待上料点就绪"));
-                while (true)
+                /*while (true)
                 {
                     if (luaManager->getTerminateFlag())
                         return 0;
@@ -224,7 +226,9 @@ namespace LuaFunction
                     if (ready)
                         break;
                     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-                }
+                }*/
+
+                Sleep(1000);
 
                 //运动至上料点
                 emit scriptController->motionExecuting(QObject::tr("运动至上料点"));
@@ -276,6 +280,8 @@ namespace LuaFunction
 				std::array<double, 4> unloadPoseInBase = mapToBase(unloadPoseInPallet);
 				std::array<double, 4> unloadPoseInBaseZUp = unloadPoseInBase;
                 unloadPoseInBaseZUp[2] += unloadZHeight;
+
+                std::cout << "loadPose" << unloadPoseInBaseZUp[0]<<"," << unloadPoseInBaseZUp[1] << "," << unloadPoseInBaseZUp[2] << "," << unloadPoseInBaseZUp[3] << std::endl;
 
                 //运动至下料点
 				emit scriptController->motionExecuting(QObject::tr("运动至下料点"));
