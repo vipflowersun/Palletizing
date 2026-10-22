@@ -1,4 +1,4 @@
-#include "PalletRobot.h"
+ï»¿#include "PalletRobot.h"
 
 
 PalletRobot::PalletRobot() {
@@ -53,7 +53,7 @@ std::vector<Eigen::Vector4d> PalletRobot::inverse(const Eigen::Vector4d& pose) c
     constexpr double EPS = 1e-9;
     if (r > maxReach + EPS || r < minReach - EPS)
     {
-        return sols; //  ²»¿É´ï
+        return sols; //  ä¸å¯è¾¾
     }
 
     double c3 = (r2 - L1 * L1 - L2 * L2) / (2.0 * L1 * L2);
@@ -66,25 +66,25 @@ std::vector<Eigen::Vector4d> PalletRobot::inverse(const Eigen::Vector4d& pose) c
     {
         const double q3 = std::atan2(s3, c3);
 
-        // ´ó±Û½Ç q2
+        // å¤§è‡‚è§’ q2
         const double k1 = L1 + L2 * c3;
         const double k2 = L2 * s3;
         const double q2 = std::atan2(y, x) - std::atan2(k2, k1);
 
-        // Ä©¶Ë½Ç q4
+        // æœ«ç«¯è§’ q4
         const double q4 = theta - q2 - q3;
 
         Eigen::Vector4d q;
         q << z, normalize(q2), normalize(q3), normalize(q4);
 
-        // ÏÞÎ»¼ì²é 
+        // é™ä½æ£€æŸ¥ 
         if(true)// (isJointValid(q)) 
         {
             sols.push_back(q);
         }
     }
 
-    // È¥ÖØ 
+    // åŽ»é‡ 
     if (sols.size() == 2)
     {
         if (std::abs(sols[0][1] - sols[1][1]) < 1e-6 &&
@@ -139,10 +139,10 @@ bool PalletRobot::isJointValid(const Eigen::Vector4d& q) const
 
 /*
 int main() {
-    // L1: 800 mm£¬L2: 600 mm
+    // L1: 800 mmï¼ŒL2: 600 mm
     PalletRobot robot(800.0, 600.0);
 
-    // ÉèÖÃ¹Ø½ÚÏÞÎ»
+    // è®¾ç½®å…³èŠ‚é™ä½
     std::pair<double, double> limits[4] = {
         {0.0, 2000.0},
         {-PI * 0.75, PI * 0.75},
@@ -158,24 +158,24 @@ int main() {
         PI / 3.0,
         PI / 12.0;
 
-    // Õý½â
+    // æ­£è§£
     Eigen::Vector4d pose = robot.forward(q);
     std::cout << "x = " << pose[0] << std::endl;
     std::cout << "y = " << pose[1] << std::endl;
     std::cout << "z = " << pose[2] << std::endl;
     std::cout << "theta = " << pose[3] << std::endl;
 
-    // Äæ½â
+    // é€†è§£
     Eigen::Vector4d pose1;
     pose1 << pose[0] + 30.0, pose[1] + 50.0, pose[2] + 300.0, pose[3] + PI / 3.0;
 
     std::vector<Eigen::Vector4d> sols = robot.inverse(pose1);
 
     for (size_t i = 0; i < sols.size(); ++i) {
-        std::cout << "Äæ½â " << i + 1 << ": [ " << sols[i].transpose() << " ]" << std::endl;
+        std::cout << "é€†è§£ " << i + 1 << ": [ " << sols[i].transpose() << " ]" << std::endl;
     }
 
-    // Ñ¡ÔñÓëÔ­Ê¼¹Ø½Ú½Ç×î½Ó½üµÄ½â
+    // é€‰æ‹©ä¸ŽåŽŸå§‹å…³èŠ‚è§’æœ€æŽ¥è¿‘çš„è§£
     if (!sols.empty()) {
         Eigen::Vector4d q_nearest = robot.selectNearest(sols, q);
         std::cout << "q_nearest =  " << q_nearest.transpose() << std::endl;

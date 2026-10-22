@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Eigen/Dense"
 #include <cmath>
 #include <vector>
@@ -22,7 +22,7 @@ public:
 
     void initParameters(double l1, double l2);
     void setJointLimits(const std::pair<double, double> limits[4]);
-    // -------------------- Õı½â --------------------
+    // -------------------- æ­£è§£ --------------------
     Eigen::Vector4d forward(const Eigen::Vector4d& q) const;
     std::vector<Eigen::Vector4d> inverse(const Eigen::Vector4d& pose) const;
     Eigen::Vector4d selectNearest(const std::vector<Eigen::Vector4d>& sols,const Eigen::Vector4d& current) const;
@@ -42,8 +42,8 @@ private:
     }
 
 private:
-    double L1; // ´ó±Û³¤¶È
-    double L2; // Ğ¡±Û³¤¶È
+    double L1; // å¤§è‡‚é•¿åº¦
+    double L2; // å°è‡‚é•¿åº¦
 
     std::pair<double, double> q_limits[4];
 };

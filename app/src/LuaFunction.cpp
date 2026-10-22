@@ -105,23 +105,13 @@ namespace LuaFunction
         if (!output.success)
             TERMINATE_WITH_ERROR_TIPS("垛型计算失败, 过大的形状误差");
 
-        MotionPlan::MotionPlanInput motionInput;
-        motionInput.palletizingOutput = output;
-		motionInput.gripperCount = gripperCount;
-        const MotionPlan motionPlan;
-        const MotionPlan::MotionPlanOutput motionOutput = motionPlan.Calculate(motionInput);
-        if (!motionOutput.success)
-            TERMINATE_WITH_ERROR_TIPS("运动规划失败");
-
         luaManager->setUserData("palletizingOutput", std::make_any<Palletizer::PalletizingOutput>(output));
-		luaManager->setUserData("motionPlanOutput", std::make_any<MotionPlan::MotionPlanOutput>(motionOutput));
 
         return 0;
     }
 
     int palletLevel(lua_State* L)
     {
-        
         ScriptController* scriptController = std::any_cast<ScriptController*>(LuaManager::userData(L, "scriptController"));
         std::shared_ptr<LuaManager> luaManager = scriptController->luaManager().lock();
 
@@ -132,13 +122,21 @@ namespace LuaFunction
         if (!mainWindow)
             TERMINATE_WITH_ERROR_TIPS("");
 
+        int gripperCount = mainWindow->getSettings()->value("basic/gripperCount", 3).toInt();
         int device = luaManager->getInputInt(-2);
 		int level = luaManager->getInputInt(-1);
-		const MotionPlan::MotionPlanOutput motionOutput = std::any_cast<MotionPlan::MotionPlanOutput>(luaManager->userData(L, "motionPlanOutput"));
 		Palletizer::PalletizingOutput palletizingOutput = std::any_cast<Palletizer::PalletizingOutput>(luaManager->userData(L, "palletizingOutput"));
         if (level % 2 == 1)
             palletizingOutput = Palletizer().MirrorOutput(palletizingOutput);
         emit scriptController->palletizingUpdated(palletizingOutput);
+
+        MotionPlan::MotionPlanInput motionInput;
+        motionInput.palletizingOutput = palletizingOutput;
+        motionInput.gripperCount = gripperCount;
+        const MotionPlan motionPlan;
+        const MotionPlan::MotionPlanOutput motionOutput = motionPlan.Calculate(motionInput);
+        if (!motionOutput.success)
+            TERMINATE_WITH_ERROR_TIPS("运动规划失败");
 
 
         if (device != 0 && device != 1)
