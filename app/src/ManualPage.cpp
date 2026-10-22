@@ -166,7 +166,7 @@ void ManualPage::onLoadingPointRecordRequested1()
 		mainWindow->appendLogMessage(QObject::tr("获取机械手1关节坐标失败，错误码：%1").arg(err), 2);
 		return;
 	}
-	QString strJoints = QString("%1,%2,%3,%4").arg(joints[0]).arg(joints[1]).arg(joints[2]).arg(joints[3]);
+	QString strJoints = QString("%1,%2,%3,%4").arg(joints[0]).arg(joints[1] * 57.3).arg(joints[2] * 57.3).arg(joints[3] * 57.3);
 	mainWindow->getSettings()->setValue("calibration/pickPosJ_1", strJoints);
 
 	mainWindow->appendLogMessage(QObject::tr("机械手1上料点标定成功。"), 0);
@@ -194,7 +194,7 @@ void ManualPage::onUnloadingPointRecordRequested1()
 	pose[0] += tmp(0);
 	pose[1] += tmp(1);
 
-	QString strPose = QString("%1,%2,%3,%4").arg(pose[0]).arg(pose[1]).arg(pose[2]).arg(pose[3]);
+	QString strPose = QString("%1,%2,%3,%4").arg(pose[0]).arg(pose[1]).arg(pose[2]-1053).arg(pose[3]);
 	mainWindow->getSettings()->setValue("calibration/palletPos_1", strPose);
 
 	mainWindow->appendLogMessage(QObject::tr("机械手1垛盘位置标定成功。"), 0);
@@ -212,7 +212,7 @@ void ManualPage::onLoadingPointRecordRequested2()
 		mainWindow->appendLogMessage(QObject::tr("获取机械手2关节坐标失败，错误码：%1").arg(err), 2);
 		return;
 	}
-	QString strJoints = QString("%1,%2,%3,%4").arg(joints[0]).arg(joints[1]).arg(joints[2]).arg(joints[3]);
+	QString strJoints = QString("%1,%2,%3,%4").arg(joints[0]).arg(joints[1] * 57.3).arg(joints[2] * 57.3).arg(joints[3] * 57.3);
 	mainWindow->getSettings()->setValue("calibration/pickPosJ_2", strJoints);
 
 	mainWindow->appendLogMessage(QObject::tr("机械手2上料点标定成功。"), 0);

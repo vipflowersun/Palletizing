@@ -1,6 +1,10 @@
 #pragma once
 #include <array>
 #include "zauxdll2.h"
+#include <iostream>
+#include "PalletRobot.h"
+#include <map>
+
 
 namespace Palletizing
 {
@@ -76,6 +80,17 @@ namespace Palletizing
 		int isUnloadCleared(int device, bool& cleared);
 
 	private:
+
+		double R2D(double r);
+		double D2R(double d);
+
 		ZMC_HANDLE _hZMC = nullptr;
+
+		std::shared_ptr<PalletRobot> palletRobot_;
+
+		std::map<int, std::array<int, 4>> axisMap;
+
+		std::map<int, int> gripperOutMap;
+		std::map<int, int> gripperInMap;
 	};
 }

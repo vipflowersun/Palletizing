@@ -91,7 +91,7 @@ void AutoPage::onBtnStart()
 		return;
 	}
 
-	mainWindow->getScriptController()->clearError();
+	//mainWindow->getScriptController()->clearError();
 	if (!mainWindow->getScriptController()->runScript(fileScriptContent.toStdString()))
 		mainWindow->appendLogMessage(tr("执行失败"), 2);
 }
