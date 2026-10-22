@@ -3,6 +3,7 @@
 #include "Mani4A.h"
 #include "JMath.hpp"
 
+#include "ElaLineEdit.h"
 #include "ElaPushButton.h"
 #include "ElaScrollArea.h"
 #include "ElaToggleSwitch.h"
@@ -89,6 +90,32 @@ namespace
 			[=](bool cartesian) { jogStack->setCurrentIndex(cartesian ? 1 : 0); });
 		groupLayout->addWidget(jogStack);
 
+		QHBoxLayout* pointMoveLayout = new QHBoxLayout;
+		pointMoveLayout->setSpacing(6);
+		pointMoveLayout->addWidget(new QLabel(QObject::tr("点位运动"), group));
+		for (const QString& axis : QStringList{QStringLiteral("X"), QStringLiteral("Y"),
+			QStringLiteral("Z"), QStringLiteral("RZ")})
+		{
+			ElaLineEdit* input = new ElaLineEdit(group);
+			input->setObjectName(QStringLiteral("pointMove%1%2").arg(robot).arg(axis));
+			input->setPlaceholderText(axis);
+			input->setMinimumWidth(48);
+			input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+			input->setAlignment(Qt::AlignRight);
+			input->setIsClearButtonEnable(false);
+			input->setText("0");
+			pointMoveLayout->addWidget(input, 1);
+		}
+		ElaPushButton* pointMoveButton = new ElaPushButton(QObject::tr("运动至"), group);
+		pointMoveButton->setFixedWidth(76);
+		pointMoveButton->setMinimumHeight(34);
+		pointMoveLayout->addWidget(pointMoveButton);
+		groupLayout->addLayout(pointMoveLayout);
+		QObject::connect(pointMoveButton, &QPushButton::pressed, page,
+			[=]() { page->onPointMovePressed(robot); });
+		QObject::connect(pointMoveButton, &QPushButton::released, page,
+			[=]() { page->onPointMoveReleased(robot); });
+
 		QGroupBox* gripperGroup = new QGroupBox(QObject::tr("夹爪控制"), group);
 		QGridLayout* gripperLayout = new QGridLayout(gripperGroup);
 		for (int index = 0; index < gripperCount; ++index)
@@ -152,6 +179,39 @@ ManualPage::ManualPage(QWidget* parent) : ElaScrollPage(parent)
 	connect(this, &ManualPage::jogStarted, this, &ManualPage::onJogStarted);
 	connect(this, &ManualPage::jogStopped, this, &ManualPage::onJogStopped);
 	connect(this, &ManualPage::gripperToggled, this, &ManualPage::onGripperToggled);
+}
+
+void ManualPage::onPointMovePressed(int robot)
+{
+	MainWindow* mainWindow = MainWindow::getMainWindow();
+	if (!mainWindow)
+		return;
+
+	int manaulRate = mainWindow->getSettings()->value("basic/manualRate", 20).toInt();
+	std::array<double, 4> pose = { 0 };
+	pose[0] = findChild<ElaLineEdit*>(QStringLiteral("pointMove%1X").arg(robot))->text().toDouble();
+	pose[1] = findChild<ElaLineEdit*>(QStringLiteral("pointMove%1Y").arg(robot))->text().toDouble();
+	pose[2] = findChild<ElaLineEdit*>(QStringLiteral("pointMove%1Z").arg(robot))->text().toDouble();
+	pose[3] = findChild<ElaLineEdit*>(QStringLiteral("pointMove%1RZ").arg(robot))->text().toDouble() * M_PI / 180.0;
+	
+	try
+	{
+		if (int err = mainWindow->getMani4A()->moveP(robot - 1, pose, manaulRate))
+			mainWindow->appendLogMessage(QObject::tr("机械手%1moveP失败，错误码：%3").arg(robot).arg(err), 2);
+	}
+	catch (std::runtime_error e)
+	{
+		mainWindow->appendLogMessage(e.what(), 2);
+	}
+}
+
+void ManualPage::onPointMoveReleased(int robot)
+{
+	MainWindow* mainWindow = MainWindow::getMainWindow();
+	if (!mainWindow)
+		return;
+
+	mainWindow->getMani4A()->terminate();
 }
 
 void ManualPage::onLoadingPointRecordRequested1()

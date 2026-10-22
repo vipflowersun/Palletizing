@@ -160,9 +160,9 @@ void MainWindow::initUi()
     f.setBold(true);
     _ui->tbFunctionArea->setFont(f);
 	_ui->tbFunctionArea->setIconSize(QSize(24, 24));
-    _ui->tbFunctionArea->addTab(tr("自动"), QIcon(":/Palletizing/Guest.png"));
-    _ui->tbFunctionArea->addTab(tr("手动"), QIcon(":/Palletizing/Guest.png"));
-    _ui->tbFunctionArea->addTab(tr("配置"), QIcon(":/Palletizing/Guest.png"));
+    _ui->tbFunctionArea->addTab(tr("自动"), QIcon(":/Palletizing/scannerCali.png"));
+    _ui->tbFunctionArea->addTab(tr("手动"), QIcon(":/Palletizing/drag.png"));
+    _ui->tbFunctionArea->addTab(tr("配置"), QIcon(":/Palletizing/Admin.png"));
 	_ui->tbFunctionArea->setCurrentIndex(0);
 
     connect(_ui->tbFunctionArea, &TabBar::currentIndexChanged, this, &MainWindow::onFunctionTabBarCurrentIndexChanged);

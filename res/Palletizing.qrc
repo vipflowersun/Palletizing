@@ -32,5 +32,8 @@
 	<file>R6.png</file>
 	<file>redRect.png</file>
 	<file>PointCloud.png</file>
+	<file>drag.png</file>
+	<file>scannerCali.png</file>
+	<file>Admin.png</file>
   </qresource>
 </RCC>

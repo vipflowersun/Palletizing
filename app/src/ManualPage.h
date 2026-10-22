@@ -23,6 +23,8 @@ namespace Palletizing
 		void onUnloadingPointRecordRequested2();
 		void onJogStarted(int robot, const QString& axis, bool positive, bool cartesian, bool highSpeed);
 		void onJogStopped(int robot, const QString& axis, bool positive, bool cartesian, bool highSpeed);
+		void onPointMovePressed(int robot);
+		void onPointMoveReleased(int robot);
 		void onGripperToggled(int robot, int gripper, bool opened);
 	};
 }
