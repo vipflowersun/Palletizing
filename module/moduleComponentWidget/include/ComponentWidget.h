@@ -81,6 +81,7 @@ public:
 	explicit TabBar(QWidget* parent = nullptr);
 	explicit TabBar(Qt::Orientation orient, QWidget *parent = nullptr);
 	void setOrientation(Qt::Orientation orient);
+	void setIconBeside(bool beside);
 	void setItemSize(int size);
 	int getItemSize() const;
 	void setIconSize(const QSize& size);
@@ -100,6 +101,7 @@ private:
 	int _itemSize = 120;
 	int _itemSpacing = 8;
 	QSize _iconSize = QSize(32, 32);
+	bool _iconBeside = false;
 };
 
 class MODULECOMPONENTWIDGET_EXPORT TabBarItem : public QToolButton
@@ -108,6 +110,7 @@ class MODULECOMPONENTWIDGET_EXPORT TabBarItem : public QToolButton
 public:
 	explicit TabBarItem(Qt::Orientation orient, QWidget* parent = nullptr);
 	void setOrientation(Qt::Orientation orient);
+	void setIconBeside(bool beside);
 	void setCheckedColor(const QColor& color);
 	void setItemSpacing(int spacing);
 protected:		
@@ -117,6 +120,7 @@ private:
 private:
 	Qt::Orientation _orient;
 	int _itemSpacing = 4;
+	bool _iconBeside = false;
 	QColor _checkedColor = QColor(64, 158, 255);
 };
 
